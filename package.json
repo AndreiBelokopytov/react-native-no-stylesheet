@@ -2,7 +2,7 @@
   "name": "react-native-no-stylesheet",
   "version": "1.0.0",
   "description": "A better alternative for React Native StyleSheet",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/AndreiBelokopytov/react-native-no-stylesheet",
   "author": "Andrey Belokopytov",
   "license": "MIT",
