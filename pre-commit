@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "running lint-staged..."
+node_modules/.bin/lint-staged --quiet
