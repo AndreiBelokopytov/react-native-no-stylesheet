@@ -1,6 +1,7 @@
 import { isUndefined, omitBy, pick } from 'lodash';
 import { FlexStyle, ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import ReactNativeStyleAttributes from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { useTheme } from './Theme';
 
 const REACT_NATIVE_STYLE_ATTRIBUTES = Object.keys(ReactNativeStyleAttributes);
 
@@ -29,6 +30,12 @@ export type TextStyleProps = TextStyle;
 
 export type ImageStyleProps = ImageStyle & FlexStyleAliases;
 
+type StyleProps = ViewStyleProps | TextStyleProps | ImageStyleProps;
+
+export type StylePropsFactory = <Theme extends object>(
+  theme: Theme,
+) => StyleProps;
+
 const pickReactNativeStyleAttributes = (props: object) =>
   pick(props, REACT_NATIVE_STYLE_ATTRIBUTES);
 
@@ -49,24 +56,46 @@ const pickViewStyleAliases = (props: ViewStyleProps): ViewStyle => ({
   backgroundColor: props.backgroundColor ?? props.bgColor,
 });
 
-export const useViewStyle = (props: ViewStyleProps): ViewStyle =>
-  omitBy(
+const useStylePropsFactory = (
+  props: StyleProps | StylePropsFactory,
+): StyleProps => {
+  const theme = useTheme();
+  if (typeof props === 'function') {
+    return props(theme);
+  } else {
+    return props;
+  }
+};
+
+export const useViewStyle = (
+  props: ViewStyleProps | StylePropsFactory,
+): ViewStyle => {
+  const _props = useStylePropsFactory(props);
+
+  return omitBy(
     {
-      ...pickReactNativeStyleAttributes(props),
-      ...pickFlexStyleAliases(props),
-      ...pickViewStyleAliases(props),
+      ...pickReactNativeStyleAttributes(_props),
+      ...pickFlexStyleAliases(_props),
+      ...pickViewStyleAliases(_props),
     },
     isUndefined,
   );
+};
 
-export const useTextStyle = (props: TextStyleProps): TextStyle =>
-  omitBy(pickReactNativeStyleAttributes(props), isUndefined);
+export const useTextStyle = (props: TextStyleProps): TextStyle => {
+  const _props = useStylePropsFactory(props);
 
-export const useImageStyle = (props: ImageStyleProps): ImageStyle =>
-  omitBy(
+  return omitBy(pickReactNativeStyleAttributes(_props), isUndefined);
+};
+
+export const useImageStyle = (props: ImageStyleProps): ImageStyle => {
+  const _props = useStylePropsFactory(props);
+
+  return omitBy(
     {
-      ...pickReactNativeStyleAttributes(props),
-      ...pickFlexStyleAliases(props),
+      ...pickReactNativeStyleAttributes(_props),
+      ...pickFlexStyleAliases(_props),
     },
     isUndefined,
   );
+};
