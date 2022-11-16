@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextStyleProps, useTextStyle } from 'lib/styles';
+import { TextStyleProps, useTextStyle } from '../styles';
 import {
   StyleSheet,
   TextInput as RNTextInput,

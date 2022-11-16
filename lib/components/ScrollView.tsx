@@ -1,5 +1,5 @@
 import React from 'react';
-import { useViewStyle, ViewStyleProps } from 'lib/styles';
+import { useViewStyle, ViewStyleProps } from '../styles';
 import {
   StyleSheet,
   ScrollView as RNScrollView,

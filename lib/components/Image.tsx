@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageStyleProps, useImageStyle } from 'lib/styles';
+import { ImageStyleProps, useImageStyle } from '../styles';
 import { Image as RNImage, ImageProps, StyleSheet } from 'react-native';
 
 type Props = ImageProps & ImageStyleProps;

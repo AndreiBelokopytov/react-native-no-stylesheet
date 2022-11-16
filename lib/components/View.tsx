@@ -1,5 +1,5 @@
 import React from 'react';
-import { useViewStyle, ViewStyleProps } from 'lib/styles';
+import { useViewStyle, ViewStyleProps } from '../styles';
 import { StyleSheet, View as RNView, ViewProps } from 'react-native';
 
 type Props = ViewProps & ViewStyleProps;

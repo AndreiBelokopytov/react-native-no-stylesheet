@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES2015",
     "module": "commonjs",
     "lib": ["es2017"],
     "jsx": "react-native",
@@ -15,10 +15,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "moduleResolution": "node",
-    "baseUrl": ".",
     "esModuleInterop": true,
     "skipLibCheck": false,
     "typeRoots": ["./types"]
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["./lib", "./types"]
 }
