@@ -9,7 +9,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import ReactNativeStyleAttributes from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-import { useTheme } from './Theme';
 
 const REACT_NATIVE_STYLE_ATTRIBUTES = Object.keys(ReactNativeStyleAttributes);
 
@@ -64,49 +63,27 @@ const pickViewStyleAliases = (props: ViewStyleProps): ViewStyle => ({
   backgroundColor: props.backgroundColor ?? props.bgColor,
 });
 
-const useStylePropsFactory = (
-  props: StyleProps | StylePropsFactory,
-): StyleProps => {
-  const theme = useTheme();
-  if (typeof props === 'function') {
-    return props(theme);
-  } else {
-    return props;
-  }
-};
-
-export const useViewStyle = (
-  props: ViewStyleProps | StylePropsFactory,
-): ViewStyle => {
-  const _props = useStylePropsFactory(props);
-
-  return omitBy(
+export const useViewStyle = (props: ViewStyleProps): ViewStyle =>
+  omitBy(
     {
-      ...pickReactNativeStyleAttributes(_props),
-      ...pickFlexStyleAliases(_props),
-      ...pickViewStyleAliases(_props),
+      ...pickReactNativeStyleAttributes(props),
+      ...pickFlexStyleAliases(props),
+      ...pickViewStyleAliases(props),
     },
     isUndefined,
   );
-};
 
-export const useTextStyle = (props: TextStyleProps): TextStyle => {
-  const _props = useStylePropsFactory(props);
+export const useTextStyle = (props: TextStyleProps): TextStyle =>
+  omitBy(pickReactNativeStyleAttributes(props), isUndefined);
 
-  return omitBy(pickReactNativeStyleAttributes(_props), isUndefined);
-};
-
-export const useImageStyle = (props: ImageStyleProps): ImageStyle => {
-  const _props = useStylePropsFactory(props);
-
-  return omitBy(
+export const useImageStyle = (props: ImageStyleProps): ImageStyle =>
+  omitBy(
     {
-      ...pickReactNativeStyleAttributes(_props),
-      ...pickFlexStyleAliases(_props),
+      ...pickReactNativeStyleAttributes(props),
+      ...pickFlexStyleAliases(props),
     },
     isUndefined,
   );
-};
 
 export const withViewStyle = <Props extends { style?: StyleProp<ViewStyle> }>(
   Component: React.ComponentType<Props>,
