@@ -1,10 +1,4 @@
-import React from 'react';
-import { useViewStyle, ViewStyleProps } from '../styles';
-import { StyleSheet, View as RNView, ViewProps } from 'react-native';
+import { View as RNView } from 'react-native';
+import { withViewStyle } from '../styles';
 
-type Props = ViewProps & ViewStyleProps;
-
-export const View = React.memo(({ style, ...rest }: Props) => {
-  const viewStyle = useViewStyle(rest);
-  return <RNView style={StyleSheet.compose(viewStyle, style)} {...rest} />;
-});
+export const View = withViewStyle(RNView);

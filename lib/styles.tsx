@@ -1,5 +1,13 @@
 import { isUndefined, omitBy, pick } from 'lodash';
-import { FlexStyle, ImageStyle, TextStyle, ViewStyle } from 'react-native';
+import { forwardRef } from 'react';
+import {
+  FlexStyle,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import ReactNativeStyleAttributes from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { useTheme } from './Theme';
 
@@ -99,3 +107,45 @@ export const useImageStyle = (props: ImageStyleProps): ImageStyle => {
     isUndefined,
   );
 };
+
+export const withViewStyle = <Props extends { style?: StyleProp<ViewStyle> }>(
+  Component: React.ComponentType<Props>,
+) =>
+  forwardRef<unknown, Props & ViewStyleProps>((props, ref) => {
+    const viewStyle = useViewStyle(props);
+    return (
+      <Component
+        {...props}
+        ref={ref}
+        style={StyleSheet.compose(viewStyle, props.style)}
+      />
+    );
+  });
+
+export const withTextStyle = <Props extends { style?: StyleProp<TextStyle> }>(
+  Component: React.ComponentType<Props>,
+) =>
+  forwardRef<unknown, Props & TextStyleProps>((props, ref) => {
+    const textStyle = useTextStyle(props);
+    return (
+      <Component
+        {...props}
+        ref={ref}
+        style={StyleSheet.compose(textStyle, props.style)}
+      />
+    );
+  });
+
+export const withImageStyle = <Props extends { style?: StyleProp<ImageStyle> }>(
+  Component: React.ComponentType<Props>,
+) =>
+  forwardRef<unknown, Props & ImageStyleProps>((props, ref) => {
+    const imageStyle = useImageStyle(props);
+    return (
+      <Component
+        {...props}
+        ref={ref}
+        style={StyleSheet.compose(imageStyle, props.style)}
+      />
+    );
+  });

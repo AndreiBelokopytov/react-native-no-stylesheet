@@ -1,10 +1,4 @@
-import React from 'react';
-import { TextStyleProps, useTextStyle } from '../styles';
-import { StyleSheet, Text as RNText, TextProps } from 'react-native';
+import { withTextStyle } from '../styles';
+import { Text as RNText } from 'react-native';
 
-type Props = TextProps & TextStyleProps;
-
-export const Text = React.memo(({ style, ...rest }: Props) => {
-  const textStyle = useTextStyle(rest);
-  return <RNText {...rest} style={StyleSheet.compose(textStyle, style)} />;
-});
+export const Text = withTextStyle(RNText);
